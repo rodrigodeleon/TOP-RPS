@@ -1,4 +1,4 @@
-function getComputerChoice() {
+function computerPick() {
   let res = Math.floor(Math.random() * 3 + 1);
   if (res == 1) {
     return "rock";
@@ -7,18 +7,24 @@ function getComputerChoice() {
   } else return "scissor";
 }
 
-function playRound() {
-  let computerPick = getComputerChoice();
-  let playerPick = prompt("Rock, Paper or Scissor?").toLowerCase();
+function playerPick() {
+    let playerChoice = prompt("Rock, Paper or Scissor?").toLowerCase();
   while (
-    playerPick != "rock" &&
-    playerPick != "paper" &&
-    playerPick != "scissor"
+    playerChoice != "rock" &&
+    playerChoice!= "paper" &&
+    playerChoice!= "scissor"
   ) {
-    alert(`${playerPick} it's not an option, please select a valid option`);
-    playerPick = prompt("Rock, Paper or Scissor?").toLowerCase();
+    alert(`${playerChoice} it's not an option, please select a valid option`);
+    playerChoice = prompt("Rock, Paper or Scissor?").toLowerCase();
   }
 
+  return playerChoice;
+
+
+}
+
+function playRound(playerPick, computerPick) {
+  
   console.log(`Player picked: ${playerPick}, Computer picked: ${computerPick}`);
 
   if (playerPick == computerPick) {
@@ -64,16 +70,16 @@ function playRound() {
   }
 }
 
-function game() {
+function gameXRounds(x) {
   alert(
-    `Welcome to our Rock, Paper, Scissors game! Results will be shown in the console, good luck!`
+    `Welcome to our Rock, Paper, Scissors game! We are going to play ${x} Rounds, Results will be shown in the console, good luck!`
   );
   let playerScore = 0;
   let computerScore = 0;
-  for (i = 0; i < 5; i++) {
+  for (i = 0; i < x; i++) {
     alert(`Round ${i + 1}`);
     console.log(`Round ${i + 1}`);
-    let roundResult = playRound();
+    let roundResult = playRound( playerPick() , computerPick());
     if (roundResult != "tie") {
       roundResult ? playerScore++ : computerScore++;
     }
@@ -91,4 +97,5 @@ function game() {
       `End of the game, It's a Tie ${playerScore} to ${computerScore}`
     );
 }
-game();
+
+gameXRounds(5);
