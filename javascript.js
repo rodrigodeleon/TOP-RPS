@@ -8,7 +8,7 @@ function computerChoice() {
 }
 
 function playerPick() {
-  // player picks with prompts
+  // player picks with prompts not used anymore
   let playerChoice = prompt("Rock, Paper or Scissor?").toLowerCase();
   while (
     playerChoice != "rock" &&
@@ -23,8 +23,9 @@ function playerPick() {
 }
 
 function playRound(playerPick) {
+  // function plays one round and returs result to main game
   let computerPick = computerChoice();
-  let result = "papas";
+  let result = "";
   console.log(`Player picked: ${playerPick}, Computer picked: ${computerPick}`);
 
   if (playerPick == computerPick) {
@@ -91,6 +92,7 @@ let playerScore = 0;
 let computerScore = 0;
 
 function startGame() {
+  //add buttons/actions to index
   let gameScreen = document.querySelector("#gameScreen");
   let rock = document.createElement("button");
   rock.textContent = "Rock";
@@ -119,52 +121,58 @@ function startGame() {
 
   const btns = Array.from(document.querySelectorAll(".btn"));
   btns.forEach((button) => {
-    button.addEventListener("click", function () {
-      let aux = playRound(button.id);
-      if (aux == "tie") console.log("its  tie");
-      else {
-        aux ? playerScore++ : computerScore++;
-      }
-      let currentRes = document.createElement("p");
-      currentRes.textContent = `Current Score:  Player: ${playerScore} , Computer: ${computerScore}`;
-      results.appendChild(currentRes);  
-      if (computerScore == 5 || playerScore == 5) gameEnd();
-    });
+    button.addEventListener("click", () => letsPlay(button.id));
   });
-}
 
-function gameEnd() {
-  alert(
-    `End of the game, Final score: Player: ${playerScore} , Computer: ${computerScore}`
-  );
-  gameScreen.style.cssText = "display:none";
-}
-
-function gameXRounds(x) {
-  let resDiv = document.querySelector("#results");
-  resDiv.textContent = `Welcome to our Rock, Paper, Scissors game! We are going to play ${x} Rounds, Results will be shown in the console, good luck!`;
-  let playerScore = 0;
-  let computerScore = 0;
-  for (i = 0; i < x; i++) {
-    alert(`Round ${i + 1}`);
-    console.log(`Round ${i + 1}`);
-    let roundResult = playRound(playerPick(), computerPick());
-    if (roundResult != "tie") {
-      roundResult ? playerScore++ : computerScore++;
+  function letsPlay(pickedOption) { //plays rounds until one player makes 5 points
+    let aux = playRound(pickedOption);
+    if (aux == "tie") console.log("its  tie");
+    else {
+      aux ? playerScore++ : computerScore++;
     }
-    console.log(
-      `Player Score: ${playerScore} , Computer Score: ${computerScore}`
-    );
+    let currentRes = document.createElement("p");
+    currentRes.textContent = `Current Score:  Player: ${playerScore} , Computer: ${computerScore}`;
+    results.appendChild(currentRes);
+    if (computerScore == 5 || playerScore == 5) gameEnd();
   }
 
-  if (playerScore > computerScore)
-    res.textContent = console.log(
-      `End of the game: You won ${playerScore} to ${computerScore}`
+  function gameEnd() {
+    // ends the game and clear the screen
+    alert(
+      `End of the game, Final score: Player: ${playerScore} , Computer: ${computerScore}`
     );
-  else if (playerScore < computerScore)
-    console.log(`End of the game: You lose ${computerScore} to ${playerScore}`);
-  else
-    console.log(
-      `End of the game, It's a Tie ${playerScore} to ${computerScore}`
-    );
+    gameScreen.style.cssText = "display:none";
+  }
+
+  function gameXRounds(x) {
+    // first function on the project, not being called
+    let resDiv = document.querySelector("#results");
+    resDiv.textContent = `Welcome to our Rock, Paper, Scissors game! We are going to play ${x} Rounds, Results will be shown in the console, good luck!`;
+    let playerScore = 0;
+    let computerScore = 0;
+    for (i = 0; i < x; i++) {
+      alert(`Round ${i + 1}`);
+      console.log(`Round ${i + 1}`);
+      let roundResult = playRound(playerPick(), computerPick());
+      if (roundResult != "tie") {
+        roundResult ? playerScore++ : computerScore++;
+      }
+      console.log(
+        `Player Score: ${playerScore} , Computer Score: ${computerScore}`
+      );
+    }
+
+    if (playerScore > computerScore)
+      res.textContent = console.log(
+        `End of the game: You won ${playerScore} to ${computerScore}`
+      );
+    else if (playerScore < computerScore)
+      console.log(
+        `End of the game: You lose ${computerScore} to ${playerScore}`
+      );
+    else
+      console.log(
+        `End of the game, It's a Tie ${playerScore} to ${computerScore}`
+      );
+  }
 }
